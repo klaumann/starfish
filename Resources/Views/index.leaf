@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>#(title)</title>
+        <link rel="stylesheet" href="/css/frontend.css">
+        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+        <link rel="apple-touch-icon" href="/images/apple-touch-icon">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+    </head>
+    
+    <body>
+      <header>
+        <a href="/" id="logo">
+          <img src="/images/logo.png" alt="company logo">
+          <h1>Squidcore</h1>
+        </a>  
+        <nav id="navigation">
+          <a href="/">
+            Home
+          </a>
+          <a href="/blog">Blog</a>
+          <a href="#" onClick="javascript:about();">About</a>
+        </nav>
+      </header>
+      
+      <main>
+        <div id="content">
+          #import("body")
+        </div>
+      </main>
+
+      <script src="/javascript/frontend.js"></script>
+    </body>
+    
+</html>
