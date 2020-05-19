@@ -24,6 +24,7 @@
           </a>
           <a href="/blog">Blog</a>
           <a href="#" onClick="javascript:about();">About</a>
+          <a href="/sign-in">Login</a>
         </nav>
       </header>
       
