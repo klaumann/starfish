@@ -6,30 +6,53 @@
 //
 
 import Vapor
+import Fluent
 
 struct BlogFrontendController {
     func blogView(req: Request) throws -> EventLoopFuture<View> {
         struct Context: Encodable {
+            struct PostWithCategory: Encodable {
+                var category: BlogCategoryModel.ViewContext
+                var post: BlogPostModel.ViewContext
+            }
             let title: String
-            let posts: [BlogPost]
+            let items: [PostWithCategory]
         }
-        let posts = BlogRepository().publishedPosts()
-        let context = Context(title: "SquidCore - Blog", posts: posts)
-        return req.view.render("blog", context)
+        
+        return BlogPostModel.query(on: req.db)
+            .sort(\.$date, .descending)
+            .with(\.$category)
+            .all()
+            .mapEach { Context.PostWithCategory(category: $0.category.viewContext, post: $0.viewContext) }
+            .flatMap {
+                let context = Context(title: "Squidcore | Blog", items: $0)
+                return req.view.render("blog", context)
+        }
+        
     }
     
     func postView(req: Request) throws -> EventLoopFuture<Response> {
-        let posts = BlogRepository().publishedPosts()
-        let slug = req.url.path.trimmingCharacters(in: .init(charactersIn: "/"))
-        guard let post = posts.first(where: {$0.slug == slug}) else {
-            return req.eventLoop.future(req.redirect(to: "/"))
-        }
-        
         struct Context: Encodable {
+            struct PostWithCategory: Encodable {
+                var category: BlogCategoryModel.ViewContext
+                var post: BlogPostModel.ViewContext
+            }
             let title: String
-            let post: BlogPost
+            let item: PostWithCategory
         }
-        let context = Context(title: "Squidcore - \(post.title)", post: post)
-        return req.view.render("post", context).encodeResponse(for: req)
+        let slug = req.url.path.trimmingCharacters(in: .init(charactersIn: "/"))
+        req.logger.info("Slug: \(slug)")
+        return BlogPostModel.query(on: req.db)
+            .filter(\.$slug == slug)
+            .with(\.$category)
+            .first()
+            .flatMap { post in
+                guard let post = post else {
+                    return req.eventLoop.future(req.redirect(to: "/"))
+                }
+                let item  = Context.PostWithCategory(category: post.category.viewContext, post: post.viewContext)
+                let context = Context(title: "Squidcore | \(post.title)", item: item)
+                return req.view.render("post", context).encodeResponse(for: req)
+        }
     }
 }

@@ -1,16 +1,12 @@
 #extend("index"):
   #export("body"):
     <section id="blog" class="wrapper">
-      <img src="#(post.image)">
-      <h2>#(post.title) (#(post.date))</h2>
-      <p>#(post.excerpt)</p>
-      #if(post.category):
-        <p class="category">#(post.category)</p>
-      #else:
-        <p class="category">Uncategorized</p>
-      #endif
+      <img src="#(item.post.image)">
+      <h2>#(item.post.title) (#(item.post.date))</h2>
+      <p>#(item.post.excerpt)</p>
+      <p class="category">#(item.post.category)</p>
       <hr>
-      <p>#(post.content)</p>
+      <p>#(item.post.content)</p>
     </section>
   #endexport
 #endextend

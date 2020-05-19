@@ -1,8 +1,13 @@
 import Vapor
 import Leaf
+import Fluent
+import FluentSQLiteDriver
 
 // configures your application
 public func configure(_ app: Application) throws {
+    
+    app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
+    
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
     app.views.use(.leaf)
@@ -12,14 +17,12 @@ public func configure(_ app: Application) throws {
     app.http.server.configuration.hostname = "0.0.0.0"
     app.http.server.configuration.port = 80
     
-    // register routes
-    // try routes(app)
-    
-    let routers: [RouteCollection] = [
-        FrontendRouter(),
-        BlogRouter(),
+    let modules: [Module] = [
+        FrontendModule(),
+        BlogModule(),
     ]
-    for router in routers {
-        try router.boot(routes: app.routes)
+    
+    for module in modules {
+        try module.configure(app)
     }
 }
