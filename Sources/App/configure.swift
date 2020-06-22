@@ -29,9 +29,10 @@ public func configure(_ app: Application) throws {
     app.http.server.configuration.port = 80
     
     let modules: [Module] = [
-        UserModule(),
-        FrontendModule(),
+        AdminModule(),
         BlogModule(),
+        FrontendModule(),
+        UserModule(),
     ]
     
     for module in modules {

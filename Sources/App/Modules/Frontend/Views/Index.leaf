@@ -24,7 +24,11 @@
           </a>
           <a href="/blog">Blog</a>
           <a href="#" onClick="javascript:about();">About</a>
-          <a href="/sign-in">Login</a>
+          #if(email != nil):
+            <a href="/admin">Admin</a> &middot; <a href="/logout">Logout</a>
+          #else:
+            <a href="/Login">Login</a>
+          #endif
         </nav>
       </header>
       

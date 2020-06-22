@@ -1,0 +1,14 @@
+#extend("Frontend/Index"):
+  #export("body"):
+  <div class="container">
+      <h2>#(item.post.title) (#(item.post.date))</h2>
+      <p>#(item.post.excerpt)</p>
+      <p class="category">#(item.post.category)</p>
+      <hr>
+      <div class="text-center">
+      <img src="#(item.post.image)" class="img-fluid center" style= "max-width: 512px;">
+      </div>
+      <p> #(item.post.content)</p>
+      </div>
+  #endexport
+#endextend

@@ -1,0 +1,70 @@
+<!--
+    <section class="wrapper">
+      <form action="/sign-in" method="post">
+        <label for="email">Ameille:</label>
+        <input type="email" name="email" id="email" class="field">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" class="field">
+        <input type="submit" value="Submit" class="submit">
+      </form>
+    </section>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>#(title)</title>
+        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+        <link rel="apple-touch-icon" href="/images/apple-touch-icon">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        
+        <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/login.css">
+
+        <style>
+          body {
+            padding-top: 3.5rem;
+          }
+        </style>
+
+    </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/">Squidcore</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+
+    <form action="/sign-in" method="post" class="form-signin">
+      <div class="text-center mb-4">
+        <img class="mb-4" src="/images/logo.png" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Log in to Squidcore</h1>
+        <p>
+          Enter your userdata to gain access.
+        </p>
+      </div>
+
+      <div class="form-label-group">
+        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputEmail">Email address</label>
+      </div>
+
+      <div class="form-label-group">
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="inputPassword">Password</label>
+      </div>
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted text-center">&copy; 2020</p>
+    </form>
+  </body>
+</html>

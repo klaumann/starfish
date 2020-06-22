@@ -1,0 +1,25 @@
+#extend("Frontend/Index"):
+  #export("body"):
+  <div class="container">
+      <h1>Bløg</h1>
+      <p class="lead">Here are the recent news and rumblings of our team.</p>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+      #for(item in items):
+        <div class="col mb-4">
+          <div class="card" style="width: 18rem;">
+            <img src="#(item.post.image)" alt="Coming Soon" class="img-fluid">
+            <div class="card-body">
+              <h5 class="card-title">#(item.post.title)</h5>
+              <p class="card-text">#(item.post.excerpt)</p>
+              <a href="/#(item.post.slug)" class="text-dark stretched-link"></a>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">By Author - #(item.post.date)</small>
+            </div>
+          </div>
+        </div>
+      #endfor
+      </div>
+    </div>
+  #endexport
+#endextend
