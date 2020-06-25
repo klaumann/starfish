@@ -19,9 +19,9 @@ struct FrontendController {
             let message: String
             let email: String?
         }
-        let context = Context(title: "SquidCore - Home",
+        let context = Context(title: "Starfish - Home",
                               header: "Welcome,",
-                              message: "This is the SquidCore landing Page",
+                              message: "This is the Starfish landing Page",
                               email: email)
         return req.view.render("Frontend/Home", context)
     }

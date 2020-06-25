@@ -18,7 +18,7 @@ struct AdminController {
             let message: String
         }
         
-        let context =  Context(title: "Squidcore - Admin", header: "Hi \(user.email)", message: "Welcome to the CMS!")
+        let context =  Context(title: "Starfish - Admin", header: "Hi \(user.email)", message: "Welcome to the CMS!")
         return req.view.render("Admin/Home", context)
     }
 }

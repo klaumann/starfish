@@ -9,7 +9,6 @@ public func configure(_ app: Application) throws {
     app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
     
     app.sessions.use(.fluent)
-//    app.sessions.configuration.cookieName = "Squidcore Cookie"
     app.migrations.add(SessionRecord.migration)
     
     app.middleware.use(app.sessions.middleware)
@@ -23,6 +22,8 @@ public func configure(_ app: Application) throws {
     app.leaf.configuration.rootDirectory = "/"
     app.leaf.files = ModularViewFiles(workingDirectory: workingDirectory, fileio: app.fileio)
     
+    // Try to automigrate
+    // app.autoMigrate()
     
     // run on 0.0.0.0
     app.http.server.configuration.hostname = "0.0.0.0"

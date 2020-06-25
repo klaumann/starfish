@@ -33,7 +33,7 @@
     </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/">Squidcore</a>
+      <a class="navbar-brand" href="/">Starfish</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -42,7 +42,7 @@
     <form action="/sign-in" method="post" class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="/images/logo.png" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Log in to Squidcore</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Log in to Starfish</h1>
         <p>
           Enter your userdata to gain access.
         </p>

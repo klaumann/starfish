@@ -6,7 +6,7 @@ func routes(_ app: Application) throws {
             let title: String
             let body: String
         }
-        let context = Context(title: "Squidcore - Leaf", body: "Hello World!")
+        let context = Context(title: "Starfish - Leaf", body: "Hello World!")
         return req.view.render("index", context)
      
     }

@@ -72,4 +72,13 @@ final class BlogPostEditForm: Encodable {
         }
         return valid
     }
+    
+    func read(from model: BlogPostModel) {
+        self.id = model.id!.uuidString
+        self.title.value = model.title
+        self.slug.value = model.slug
+        self.excerpt.value = model.excerpt
+        self.date.value = DateFormatter.year.string(from: model.date)
+        self.content.value = model.content
+    }
 }

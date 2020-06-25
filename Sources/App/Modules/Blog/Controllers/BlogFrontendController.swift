@@ -25,7 +25,7 @@ struct BlogFrontendController {
             .all()
             .mapEach { Context.PostWithCategory(category: $0.category.viewContext, post: $0.viewContext) }
             .flatMap {
-                let context = Context(title: "Squidcore | Blog", items: $0)
+                let context = Context(title: "Starfish | Blog", items: $0)
                 return req.view.render("Blog/Frontend/Blog", context)
         }
         
@@ -51,7 +51,7 @@ struct BlogFrontendController {
                     return req.eventLoop.future(req.redirect(to: "/"))
                 }
                 let item  = Context.PostWithCategory(category: post.category.viewContext, post: post.viewContext)
-                let context = Context(title: "Squidcore | \(post.title)", item: item)
+                let context = Context(title: "Starfish | \(post.title)", item: item)
                 return req.view.render("Blog/Frontend/Post", context).encodeResponse(for: req)
         }
     }

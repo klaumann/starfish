@@ -17,6 +17,7 @@
               <td class="small"><img src="#(item.image)" alt="coming"></td>
               <td>#(item.title)</td>
               <td class="actions">
+                <a href="/admin/blog/posts/#(item.id)">Edit</a>
                 <a href="/blog/#(item.slug)" target="_blank">Preview</a>
               </td>
             </tr>

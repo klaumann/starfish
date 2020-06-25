@@ -13,7 +13,7 @@ struct UserFrontendController {
         struct Context: Encodable {
             let title: String
         }
-        let context = Context(title: "Squidcore | Sign in")
+        let context = Context(title: "Starfish | Sign in")
         return req.view.render("User/Frontend/Login", context)
     }
     

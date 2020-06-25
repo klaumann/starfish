@@ -1,3 +1,3 @@
 function about() {
-  alert("Using SquidCore \n\nversion 0.0.1");
+  alert("Using Starfish \n\nversion 0.0.1");
 }
