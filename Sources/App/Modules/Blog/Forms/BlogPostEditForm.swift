@@ -17,6 +17,8 @@ final class BlogPostEditForm: Encodable {
         var date: String
         var content: String
         var categoryId: String
+        var image: File?
+        var imageDelete: Bool?
     }
     
     var id: String? = nil
@@ -26,6 +28,7 @@ final class BlogPostEditForm: Encodable {
     var date = BasicFormField()
     var content = BasicFormField()
     var categoryId = SelectionFormField()
+    var image = FileFormField()
     
     init() {}
     
@@ -40,6 +43,13 @@ final class BlogPostEditForm: Encodable {
         self.date.value = context.date
         self.content.value = context.content
         self.categoryId.value = context.categoryId
+        self.image.delete = context.imageDelete ?? false
+        if
+            let image = context.image,
+            let data = image.data.getData(at: 0, length: image.data.readableBytes),
+            !data.isEmpty {
+            self.image.data = data
+        }
     }
     
     func read(from model: BlogPostModel) {
@@ -50,6 +60,7 @@ final class BlogPostEditForm: Encodable {
         self.date.value = DateFormatter.year.string(from: model.date)
         self.content.value = model.content
         self.categoryId.value = model.$category.id.uuidString
+        self.image.value = model.image
     }
     
     func write(to model: BlogPostModel) {
@@ -59,6 +70,12 @@ final class BlogPostEditForm: Encodable {
         model.date = DateFormatter.year.date(from: self.date.value)!
         model.content = self.content.value
         model.$category.id = UUID(uuidString: self.categoryId.value)!
+        if !self.image.value.isEmpty {
+            model.image = self.image.value
+        }
+        if self.image.delete {
+            model.image = ""
+        }
     }
     
     func validate(req: Request) -> EventLoopFuture<Bool> {
