@@ -40,8 +40,8 @@ struct BlogFrontendController {
             let title: String
             let item: PostWithCategory
         }
-        let slug = req.url.path.trimmingCharacters(in: .init(charactersIn: "/"))
-        req.logger.info("Slug: \(slug)")
+        
+        let slug = req.url.path.trimmingCharacters(in: .init(charactersIn: "/blog/"))
         return BlogPostModel.query(on: req.db)
             .filter(\.$slug == slug)
             .with(\.$category)

@@ -2,6 +2,7 @@
   #export("body"):
     <div class="wrapper">
       <h2>Posts</h2>
+      <a href="/admin/blog/posts/new">Create</a>
     </div>
     <table class="wrapper">
       <thead>
@@ -16,7 +17,7 @@
               <td class="small"><img src="#(item.image)" alt="coming"></td>
               <td>#(item.title)</td>
               <td class="actions">
-                <a href="/#(item.slug)" target="_blank">Preview</a>
+                <a href="/blog/#(item.slug)" target="_blank">Preview</a>
               </td>
             </tr>
           #endfor

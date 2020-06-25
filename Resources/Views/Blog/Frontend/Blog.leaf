@@ -11,7 +11,7 @@
             <div class="card-body">
               <h5 class="card-title">#(item.post.title)</h5>
               <p class="card-text">#(item.post.excerpt)</p>
-              <a href="/#(item.post.slug)" class="text-dark stretched-link"></a>
+              <a href="/blog/#(item.post.slug)" class="text-dark stretched-link"></a>
             </div>
             <div class="card-footer">
               <small class="text-muted">By Author - #(item.post.date)</small>
