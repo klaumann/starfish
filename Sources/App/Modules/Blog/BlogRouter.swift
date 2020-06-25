@@ -32,6 +32,7 @@ struct BlogRouter: RouteCollection {
         posts.post("new", use: self.adminController.create)
         posts.get(":id", use: self.adminController.updateView)
         posts.post(":id", use: self.adminController.update)
+        posts.post(":id","delete", use: self.adminController.delete)
             
     }
 }
