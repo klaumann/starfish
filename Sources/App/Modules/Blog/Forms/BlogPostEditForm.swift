@@ -16,6 +16,7 @@ final class BlogPostEditForm: Encodable {
         var excerpt: String
         var date: String
         var content: String
+        var categoryId: String
     }
     
     var id: String? = nil
@@ -24,6 +25,7 @@ final class BlogPostEditForm: Encodable {
     var excerpt = BasicFormField()
     var date = BasicFormField()
     var content = BasicFormField()
+    var categoryId = SelectionFormField()
     
     init() {}
     
@@ -37,6 +39,17 @@ final class BlogPostEditForm: Encodable {
         self.excerpt.value = context.excerpt
         self.date.value = context.date
         self.content.value = context.content
+        self.categoryId.value = context.categoryId
+    }
+    
+    func read(from model: BlogPostModel) {
+        self.id = model.id!.uuidString
+        self.title.value = model.title
+        self.slug.value = model.slug
+        self.excerpt.value = model.excerpt
+        self.date.value = DateFormatter.year.string(from: model.date)
+        self.content.value = model.content
+        self.categoryId.value = model.$category.id.uuidString
     }
     
     func write(to model: BlogPostModel) {
@@ -45,9 +58,10 @@ final class BlogPostEditForm: Encodable {
         model.excerpt = self.excerpt.value
         model.date = DateFormatter.year.date(from: self.date.value)!
         model.content = self.content.value
+        model.$category.id = UUID(uuidString: self.categoryId.value)!
     }
     
-    func validate() -> Bool {
+    func validate(req: Request) -> EventLoopFuture<Bool> {
         var valid = true
         
         if self.title.value.isEmpty {
@@ -70,15 +84,16 @@ final class BlogPostEditForm: Encodable {
             self.content.error = "Content is required"
             valid = false
         }
-        return valid
+        let uuid = UUID(uuidString: self.categoryId.value)
+        return BlogCategoryModel.find(uuid, on: req.db)
+            .map { model in
+                if model == nil {
+                    self.categoryId.error = "Category identifier error"
+                    valid = false
+                }
+                return valid
+            }
     }
     
-    func read(from model: BlogPostModel) {
-        self.id = model.id!.uuidString
-        self.title.value = model.title
-        self.slug.value = model.slug
-        self.excerpt.value = model.excerpt
-        self.date.value = DateFormatter.year.string(from: model.date)
-        self.content.value = model.content
-    }
+    
 }

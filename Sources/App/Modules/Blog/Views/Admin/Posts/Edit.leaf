@@ -51,6 +51,20 @@
             </section>
 
             <section>
+              <label for="categoryId">Category</label>
+              <select name="categoryId">
+                #for(item in edit.categoryId.options):
+                  <option #if(item.key == edit.categoryId.value): selected="selected" #endif value="#(item.key)">#(item.label)</option>
+                #endfor
+              </select>
+              #if(edit.categoryId.error != nil): 
+                <span class="error">#(edit.categoryId.error)</span>
+              #endif
+            </section>
+
+            <br />
+
+            <section>
                 <input type="submit" class="submit" value="Save">
             </section>
         </form>

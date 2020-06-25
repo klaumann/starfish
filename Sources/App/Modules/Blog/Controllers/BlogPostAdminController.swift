@@ -21,11 +21,19 @@ struct BlogPostAdminController {
             }
     }
     
+    func beforeRender(req: Request, form: BlogPostEditForm) -> EventLoopFuture<Void> {
+        BlogCategoryModel.query(on: req.db).all()
+            .mapEach(\.formFieldOption)
+            .map { form.categoryId.options = $0 }
+    }
+    
     func render(req: Request, form: BlogPostEditForm) -> EventLoopFuture<View> {
         struct Context<T: Encodable>: Encodable {
             let edit: T
         }
-        return req.view.render("Blog/Admin/Posts/Edit", Context(edit: form))
+        return self.beforeRender(req: req, form: form).flatMap {
+            req.view.render("Blog/Admin/Posts/Edit", Context(edit: form))
+        }
     }
 
     func createView(req: Request) throws -> EventLoopFuture<View> {
@@ -34,22 +42,17 @@ struct BlogPostAdminController {
     
     func create(req: Request) throws -> EventLoopFuture<Response> {
         let form = try BlogPostEditForm(req: req)
-        guard form.validate() else {
-            return self.render(req: req, form: form).encodeResponse(for: req)
-        }
-        let model = BlogPostModel()
-        model.image = "/images/posts/01.jpg"
-        form.write(to: model)
-        
-        return BlogCategoryModel.query(on: req.db)
-            .first()
-            .unwrap(or: Abort(.notFound))
-            .flatMap { category in
-                model.$category.id = category.id!
-                return model.create(on: req.db)
-            }
-            .map {
-                req.redirect(to: "/admin/blog/posts")
+        return form.validate(req: req)
+            .flatMap { isValid -> EventLoopFuture<Response> in
+                guard isValid else {
+                    return self.render(req: req, form: form).encodeResponse(for: req)
+                }
+                let model = BlogPostModel()
+                model.image = "/images/posts/01.jpg"
+                form.write(to: model)
+                return model.create(on: req.db).map {
+                    req.redirect(to: model.id!.uuidString)
+                }
             }
     }
     
@@ -74,18 +77,25 @@ struct BlogPostAdminController {
     
     func update(req: Request) throws -> EventLoopFuture<View> {
         let form = try BlogPostEditForm(req: req)
-        guard form.validate() else {
-            return self.render(req: req, form: form)
+        return form.validate(req: req).flatMap { isValid in
+            guard isValid else {
+                return self.render(req: req, form: form)
+            }
+            do {
+                return try self.find(req).flatMap { model in
+                    form.write(to: model)
+                    return model.update(on: req.db).map {
+                        form.read(from: model)
+                    }
+                }
+                .flatMap{
+                    self.render(req: req, form: form)
+                }
+            }
+            catch {
+                return req.eventLoop.future(error: error)
+            }
         }
-        return try self.find(req)
-            .flatMap { model in
-                form.write(to: model)
-                return model.update(on: req.db)
-            }
-            .flatMap {
-                self.render(req: req, form: form)
-            }
-            
     }
     
     func delete(req: Request) throws -> EventLoopFuture<String> {
