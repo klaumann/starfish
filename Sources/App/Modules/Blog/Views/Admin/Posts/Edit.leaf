@@ -7,7 +7,7 @@
             #endif
         </div>
 
-        <form id="post-edit-form" class="wrapper" method="post" action="/admin/blog/posts/#if(edit.id != nil):#(edit.id)#else:new#endif">
+        <form id="post-edit-form" class="wrapper" method="post" action="/admin/blog/posts/#if(edit.id != nil):#(edit.id)#else:new#endif" enctype="multipart/form-data">
             <input type="hidden" name="id" value="#(edit.id)">
 
             <section>
@@ -59,6 +59,22 @@
               </select>
               #if(edit.categoryId.error != nil): 
                 <span class="error">#(edit.categoryId.error)</span>
+              #endif
+            </section>
+            
+            <section>
+              <label for="image">Image</label>
+              <div id="image-uploader" class="image-uploader">
+                #if(edit.image.value != ""):
+                  <img src="#(edit.image.value)" alt="Alt text coming sooner or later" id="uploaded-image">
+                #endif
+                <a href="javascript:void(0);" id="choose-button" onClick="chooseImage();">Choose</a>
+                <a href="javaxcript:void(0);" id="remove-button" onClick="removeImage();">Remove</a>
+                <input type="hidden" name="imageDelete" id="imageDelete" value="false">
+                <input type="file" name="image" id="image" accept="image/jpeg" style="display:none;">
+              </div>
+              #if(edit.image.error != nil):
+                <span class="error">#(edit.image.error)</span>
               #endif
             </section>
 
