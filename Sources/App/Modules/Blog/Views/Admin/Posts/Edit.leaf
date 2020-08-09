@@ -69,7 +69,7 @@
                   <img src="#(edit.image.value)" alt="Alt text coming sooner or later" id="uploaded-image">
                 #endif
                 <a href="javascript:void(0);" id="choose-button" onClick="chooseImage();">Choose</a>
-                <a href="javaxcript:void(0);" id="remove-button" onClick="removeImage();">Remove</a>
+                <a href="javascript:void(0);" id="remove-button" onClick="removeImage();">Remove</a>
                 <input type="hidden" name="imageDelete" id="imageDelete" value="false">
                 <input type="file" name="image" id="image" accept="image/jpeg" style="display:none;">
               </div>

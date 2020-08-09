@@ -1,7 +1,9 @@
-import Vapor
 import Leaf
 import Fluent
 import FluentSQLiteDriver
+import Liquid
+import LiquidLocalDriver
+import Vapor
 
 // configures your application
 public func configure(_ app: Application) throws {
@@ -13,6 +15,9 @@ public func configure(_ app: Application) throws {
     
     app.middleware.use(app.sessions.middleware)
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    
+    app.routes.defaultMaxBodySize = "10mb"
+    app.fileStorages.use(.local(publicUrl: "http://localhost", publicPath: app.directory.publicDirectory, workDirectory: "assets"), as: .local)
 
     app.views.use(.leaf)
     app.leaf.cache.isEnabled = app.environment.isRelease
